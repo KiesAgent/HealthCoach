@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<ui:composition>
+    <!--
+    ==========================================================
+    |  Clicking the INFO button displays this Dialog window  |
+    |  to show the Details of the Selected Searched Recipe.  |
+    ==========================================================
+    -->
+    <p:dialog id="UserWorkoutViewDlg" header="View My Workout" widgetVar="UserWorkoutViewDialog"
+              modal="true" position="center" appendTo="@(body)"
+              showEffect="slide" hideEffect="fade" responsive="true"
+              width="40%" height="500px">
+        <!--
+        There are various effect options to be used when displaying and closing the dialog.
+        Use showEffect and hideEffect options to apply these effects:
+            blind, bounce, clip, drop, explode, fade, fold, highlight, puff,
+            pulsate, scale, shake, size, slide and transfer. [PrimeFaces user Guide]
+        -->
+        <h:form id="UserWorkoutViewForm">
+            <!-- Height must be given as a fixed value to enable scrolling -->
+            <!-- Width is unspecified and changeable; thus being responsive -->
+
+            <div align="center">
+                <h:outputText value="Workout Photo:" style="font-style: italic"/>
+                <br/>
+                <h:graphicImage value="#{userWorkoutController.selected.imageURL}" />
+                <br> </br>
+
+                <h:outputText value="Workout Name:" style="font-style: italic"/>
+                <br/>
+                <h:outputText value="#{userWorkoutController.selected.name}"/>
+                <br> </br>
+
+                <h:outputText value="Workout Category:" style="font-style: italic"/>
+                <br/>
+                <h:outputText value="#{userWorkoutController.selected.category}"/>
+                <br> </br>
+
+                <h:outputText value="Workout Muscle:" style="font-style: italic"/>
+                <br/>
+                <h:outputText value="#{userWorkoutController.selected.muscle}"/>
+                <br> </br>
+
+                <h:outputText value="Workout Equipment:" style="font-style: italic"/>
+                <br/>
+                <h:outputText value="#{userWorkoutController.selected.equipment}"/>
+                <br> </br>
+
+                <h:outputText value="Workout Description:" style="font-style: italic"/>
+                <br/>
+                <h:outputText value="#{userWorkoutController.selected.description}"/>
+                <br> </br>
+            </div>
+            <br />
+
+            <h:panelGroup>
+                <br />
+                <div align="center">
+                    <!-- CLOSE button -->
+                    <p:commandButton value="Close" icon="fas fa-window-close" styleClass="ui-button-outlined"
+                                     onclick="PF('UserWorkoutViewDialog').hide()" />
+                </div>
+            </h:panelGroup>
+
+        </h:form>
+    </p:dialog>
+</ui:composition>
+</html>

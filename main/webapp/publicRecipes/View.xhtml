@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+    <p:dialog id="RecipeViewDlg" header="View Recipe" widgetVar="RecipeViewDialog"
+              modal="true" width="60%" position="center" appendTo="@(body)"
+              showEffect="slide" hideEffect="fade" responsive="true" >
+
+        <h:form id="RecipeViewForm">
+
+            <!-- Height must be given as a fixed value to enable scrolling -->
+            <!-- Width is unspecified and changeable; thus being responsive -->
+
+            <p:scrollPanel mode="native" style="height:500px">
+                <div align="center">
+
+                    <!-- Dialog Content to be Vertically Scrolled -->
+                    <h:outputText value="Recipe Photo:"/>
+                    <br />
+                    <!-- Display the selected recipe's photo -->
+                    <img src="#{publicRecipeController.selected.photoUrl}"
+                         alt="Recipe Photo" width="400" />
+                    <br /><br />
+
+                    <h:outputText value="Recipe Name:"/>
+                    <br />
+                    <a href="#{publicRecipeController.selected.websiteUrl}" style="color: blue" target="_blank">
+                        <h:outputText value="#{publicRecipeController.selected.name}"/>
+                    </a>
+                    <br /><br />
+
+                    <h:outputText value="Recipe Category:"/>
+                    <br />
+                    <h:outputText value="#{publicRecipeController.selected.category}"/>
+                    <br /><br />
+
+                    <h:outputText value="Recipe Cuisine:"/>
+                    <br />
+                    <h:outputText value="#{publicRecipeController.selected.cuisine}"/>
+                    <br /><br />
+
+                    <h:outputText value="Publisher Name:"/>
+                    <br />
+                    <a href="#{publicRecipeController.selected.publisherUrl}" style="color: blue" target="_blank">
+                        <h:outputText value="#{publicRecipeController.selected.publisherName}"/>
+                    </a>
+                    <br /><br />
+
+                    <h:outputText value="Recipe Ingredients:"/>
+                    <br />
+                    <h:outputText value="#{publicRecipeController.selected.ingredients}"/>
+                    <br /><br />
+
+                    <h:outputText value="Recipe Nutrients:"/>
+                    <br />
+                    <h:outputText value="#{publicRecipeController.selected.nutrients}"/>
+                    <br /><br />
+
+                    <p:commandButton type="button" value="Close" icon="fas fa-window-close" styleClass="ui-button-outlined"
+                                     ajax="false" immediate="true" onclick="PF('RecipeViewDialog').hide()" />
+                </div>
+            </p:scrollPanel>
+
+        </h:form>
+    </p:dialog>
+</ui:composition>
+</html>

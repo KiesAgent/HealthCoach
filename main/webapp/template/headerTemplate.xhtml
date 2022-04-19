@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+<!-- Do not enter tags before the composition line since they are ignored by JSF -->
+<ui:composition>
+    <h:form>
+        <table border="0" cellspacing="0" cellpadding="10" width="100%">
+            <tr>
+                <!--
+                ***************************************
+                Column 1 (Left): HealthCoach Logo Image
+                ***************************************
+                -->
+                <td align="left" valign="middle" style="width:154px;">
+                    <!--
+                    Use EL to reference the image file since it will be accessed from all UI pages.
+                    Column width = Logo Image Width
+                    -->
+                    <h:link outcome="/index">
+                        <img src="#{resource['images:healthCoachLogo.png']}"
+                             style="height:64px; width:auto; float:left; padding-left:10px; border:none;"
+                             alt="HealthCoach Logo" />
+                    </h:link>
+                </td>
+
+                <!--
+                ***************************
+                Column 2 (Center): App Name
+                ***************************
+                -->
+                <td align="center" valign="middle">
+                    <!-- Welcome the user if signed in -->
+                    <c:if test="#{userController.isLoggedIn() == true}">
+                        <span class="headerTitle">Welcome to Health Coach, #{userController.selected.firstName}</span>
+                    </c:if>
+                    <c:if test="#{userController.isLoggedIn() == false}">
+                        <span class="headerTitle">Welcome to Health Coach, Guest</span>
+                    </c:if>
+                </td>
+
+                <!--
+                ***************************************
+                Column 3 (Right): Hamburger Menu Button
+                ***************************************
+                -->
+                <td align="right" valign="middle" style="width:100px;">
+                    <div style="padding-right:10px">
+                        <p:sidebar widgetVar="sidebar2" position="right">
+                            <!-- Menu Options IF a User is Signed In -->
+                            <c:if test="#{userController.isLoggedIn() == true}">
+                                <div align="left">
+                                    <h:commandLink action="/userAccount/Profile">
+                                        <p:graphicImage cache="false" style="height: 10%; width: 30%; border-radius: 50%;" value="#{userController.userPhoto()}"/>
+                                    </h:commandLink>
+                                </div>
+                                <p:button value="My Account" outcome="/userAccount/Profile" icon="fas fa-user" style="width: 100%"/>
+                                <p:button value="Home" outcome="/index" icon="fas fa-home" style="width: 100%"/>
+                                <p:button value="Public Recipes" outcome="/publicRecipes/List" icon="fas fa-list" style="width: 100%"/>
+                                <p:button value="Public Workouts" outcome="/publicWorkouts/PublicWorkoutList" icon="fas fa-list" style="width: 100%"/>
+                                <p:commandButton type="button" value="Basic Recipe Search" onclick="PF('RecipeSearchDialog').show();return false;" icon="fas fa-search" style="width: 100%"/>
+                                <p:commandButton type="button" value="Advanced Recipe Search" onclick="PF('AdvRecipeSearchDialog').show();return false;" icon="fas fa-search" style="width: 100%"/>
+                                <p:commandButton type="button" value="Workout Search" onclick="PF('WorkoutSearchDialog').show();return false;" icon="fas fa-search" style="width: 100%"/>
+                                <p:button value="My Recipes" outcome="/userRecipes/List" icon="fas fa-list" style="width: 100%" />
+                                <p:button value="My Workouts" outcome="/userWorkouts/UserWorkoutList" icon="fas fa-list" style="width: 100%" />
+                                <p:button value="Send Reminder" outcome="/userAccount/Calendar" icon="fas fa-calendar" style="width: 100%" />
+                                <p:button value="Take Questionnaire" outcome="/userQuestionnaire/TakeQuestionnaire" icon="fas fa-pencil-alt" style="width: 100%" />
+                                <p:button value="Questionnaires Taken" outcome="/userQuestionnaire/QuestionnairesTaken" icon="fas fa-check" style="width: 100%" />
+                                <p:commandButton value="Sign Out" ajax="false" action="#{userController.logout()}" icon="fas fa-sign-out-alt" style="width: 100%"/>
+
+                            </c:if>
+
+                            <!-- Menu Options IF No User is Signed In -->
+                            <c:if test="#{userController.isLoggedIn() == false}">
+                                <p:button value="Home" outcome="/index" icon="fas fa-home" style="width: 100%"/>
+                                <p:button value="Public Recipes" outcome="/publicRecipes/List" icon="fas fa-list" style="width: 100%"/>
+                                <p:button value="Public Workouts" outcome="/publicWorkouts/PublicWorkoutList" icon="fas fa-list" style="width: 100%"/>
+                                <p:commandButton type="button" value="Basic Recipe Search" onclick="PF('RecipeSearchDialog').show();return false;" icon="fas fa-search" style="width: 100%"/>
+                                <p:commandButton type="button" value="Advanced Recipe Search" onclick="PF('AdvRecipeSearchDialog').show();return false;" icon="fas fa-search" style="width: 100%"/>
+                                <p:commandButton type="button" value="Workout Search" onclick="PF('WorkoutSearchDialog').show();return false;" icon="fas fa-search" style="width: 100%"/>
+                                <p:button value="Sign In" outcome="/SignIn" icon="fas fa-sign-in-alt" style="width: 100%" />
+                                <p:button value="Create Account" outcome="/userAccount/CreateAccount" icon="fas fa-user-plus" style="width: 100%" />
+                            </c:if>
+                        </p:sidebar>
+                        <p:commandButton icon="pi pi-arrow-left" type="button" onclick="PF('sidebar2').show()" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </h:form>
+
+    <!--
+        Selecting the 'API Search' menu option displays the included
+        WorkoutSearch.xhtml file in a dialog box on top of the currently displayed page.
+        -->
+    <ui:include src="/recipeSearch/BasicRecipeSearch.xhtml"/>
+    <ui:include src="/recipeSearch/AdvancedRecipeSearch.xhtml"/>
+    <ui:include src="/workoutSearch/WorkoutSearch.xhtml"/>
+
+</ui:composition>
+<!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+</html>

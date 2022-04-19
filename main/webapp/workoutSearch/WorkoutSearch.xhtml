@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+        <!-- 
+        =============================================================================
+        |  Selecting the API SEARCH menu option displays this Dialog window         |
+        |  for the user to search a workout by Category, Equipment and Muscle       |
+        =============================================================================
+        -->
+        <p:dialog id="WorkoutSearchDlg" header="Search Workouts" widgetVar="WorkoutSearchDialog"
+                  modal="true" position="center" appendTo="@(body)"
+                  showEffect="slide" hideEffect="fade" responsive="true" >
+
+            <h:form id="WorkoutSearchForm">
+                <p:panel>                
+                    <h:panelGrid columns="2">
+                        <!--
+                        The user can search for a workout with respect to:
+                            - Category
+                            - Muscle
+                            - Equipment
+                            - Max. Number of Workouts
+                        -->
+                        
+                        <!-- Search Category is selected here. -->
+                        <h:outputLabel value="Category: " />
+                        <p:selectOneMenu id="category" value="#{searchedWorkoutController.searchField_Category}"
+                                         required="true" requiredMessage="Please Select a Category!" >
+
+                            <f:selectItem itemLabel="Select Category"   itemValue="" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="N/A"               itemValue="1000"/>
+                            <f:selectItem itemLabel="Abs"               itemValue="10"/>
+                            <f:selectItem itemLabel="Arms"              itemValue="8"/>
+                            <f:selectItem itemLabel="Back"              itemValue="12"/>
+                            <f:selectItem itemLabel="Calves"            itemValue="14"/>
+                            <f:selectItem itemLabel="Chest"             itemValue="11"/>
+                            <f:selectItem itemLabel="Legs"              itemValue="9"/>
+                            <f:selectItem itemLabel="Shoulders"         itemValue="13"/>
+                        </p:selectOneMenu>
+
+                        <!-- Search Muscle is selected here. -->
+                        <h:outputLabel value="Muscle: " />
+                        <p:selectOneMenu id="muscle" value="#{searchedWorkoutController.searchField_Muscle}"
+                                         required="true" requiredMessage="Please Select a Muscle!" >
+
+                            <f:selectItem itemLabel="Select Muscle"         itemValue="" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="N/A"                   itemValue="1000"/>
+                            <f:selectItem itemLabel="Anterior deltoid"      itemValue="2"/>
+                            <f:selectItem itemLabel="Biceps brachii"        itemValue="1"/>
+                            <f:selectItem itemLabel="Biceps femoris"        itemValue="11"/>
+                            <f:selectItem itemLabel="Brachialis"            itemValue="13"/>
+                            <f:selectItem itemLabel="Gastrocnemius"         itemValue="7"/>
+                            <f:selectItem itemLabel="Gluteus maximus"       itemValue="8"/>
+                            <f:selectItem itemLabel="Latissimus dorsi"      itemValue="12"/>
+                            <f:selectItem itemLabel="Obliquus externus abdominis"       itemValue="14"/>
+                            <f:selectItem itemLabel="Pectoralis major"      itemValue="4"/>
+                            <f:selectItem itemLabel="Quadriceps femoris"    itemValue="10"/>
+                            <f:selectItem itemLabel="Rectus abdominis"      itemValue="6"/>
+                            <f:selectItem itemLabel="Serratus anterior"     itemValue="3"/>
+                            <f:selectItem itemLabel="Soleus"                itemValue="15"/>
+                            <f:selectItem itemLabel="Trapezius"             itemValue="9"/>
+                            <f:selectItem itemLabel="Triceps brachii"       itemValue="5"/>
+                        </p:selectOneMenu>
+
+                        <!-- Search Muscle is selected here. -->
+                        <h:outputLabel value="Equipment: " />
+                        <p:selectOneMenu id="equipment" value="#{searchedWorkoutController.searchField_Equipment}"
+                                         required="true" requiredMessage="Please Select an Equipment!" >
+
+                            <f:selectItem itemLabel="Select Equipment"                  itemValue="" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="N/A"                               itemValue="1000"/>
+                            <f:selectItem itemLabel="None (bodyweight exercise)"        itemValue="7"/>
+                            <f:selectItem itemLabel="Barbell"                           itemValue="1"/>
+                            <f:selectItem itemLabel="Bench"                             itemValue="8"/>
+                            <f:selectItem itemLabel="Dumbbell"                          itemValue="3"/>
+                            <f:selectItem itemLabel="Gym mat"                           itemValue="4"/>
+                            <f:selectItem itemLabel="Incline bench"                     itemValue="9"/>
+                            <f:selectItem itemLabel="Kettlebell"                        itemValue="10"/>
+                            <f:selectItem itemLabel="Pull-up bar"                       itemValue="6"/>
+                            <f:selectItem itemLabel="Swiss Ball"                        itemValue="5"/>
+                            <f:selectItem itemLabel="SZ-Bar"                            itemValue="2"/>
+                        </p:selectOneMenu>
+
+
+                        <!-- Search max number of workouts is selected here. -->
+                        <h:outputLabel value="Max. Number of Workouts: " />
+                        <p:selectOneMenu id="maxNumberOfWorkouts" value="#{searchedWorkoutController.searchField_MaxNumberOfWorkouts}"
+                                         required="true" requiredMessage="Please Select a Maximum Number of Workouts!" >
+
+                            <f:selectItem itemLabel="Select Num. Workouts"  itemValue="" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="N/A"                   itemValue="1000"/>
+                            <f:selectItem itemLabel="10"                    itemValue="10"/>
+                            <f:selectItem itemLabel="20"                    itemValue="20"/>
+                            <f:selectItem itemLabel="30"                    itemValue="30"/>
+                            <f:selectItem itemLabel="40"                    itemValue="40"/>
+                            <f:selectItem itemLabel="50"                    itemValue="50"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+
+                    <h:panelGroup>
+                        <br /><br />
+                        <div align="center" >
+                            <!-- SUBMIT button -->
+                            <p:commandButton value="Submit" icon="fas fa-arrow-up" styleClass="rounded-button"
+                                             ajax="false" action="#{searchedWorkoutController.performSearch()}" />
+                            &nbsp;
+                            <!-- CLEAR button -->
+
+                            <p:commandButton value="Clear" icon="fas fa-undo" styleClass="ui-button-outlined"
+                                             immediate="true"
+                                             actionListener="#{searchedWorkoutController.clearSearchFields()}"
+                                             update=":WorkoutSearchForm" oncomplete="PF('WorkoutSearchDialog').show()" >
+
+                                <p:resetInput target=":WorkoutSearchForm" />
+                            </p:commandButton>
+                            &nbsp;
+                            <!-- CANCEL button -->
+                            <p:commandButton value="Cancel" icon="fas fa-ban" styleClass="ui-button-outlined"
+                                             onclick="PF('WorkoutSearchDialog').hide()" immediate="true" />
+                        </div>
+                    </h:panelGroup>
+                </p:panel>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>

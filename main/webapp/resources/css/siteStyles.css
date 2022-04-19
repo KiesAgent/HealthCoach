@@ -1,0 +1,326 @@
+/*****************************************************
+*   Cascading Style Sheets (CSS) Style Definitions   *
+*   Composed by Osman Balci for the Recipes app.     *
+*****************************************************/
+
+html, body {
+    background-color: seashell;
+    margin: 0 0 0 0;    /* top right bottom left */
+    width: 100%;        /* Set page width horizontally 100% */
+    height: 100%;       /* Set page height vertically 100% */
+}
+
+body, p {
+    font-family: "Times New Roman", Times, sans-serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    color: black;
+}
+
+h1, .title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    color: maroon;
+}
+
+/*
+=======================================
+|   Site Template Component Styling   |
+=======================================
+*/
+#page {
+    font-family: "Times New Roman", Times, sans-serif;
+    font-size: 12pt;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    color: black;
+}
+/*
+Style the div component whose unique id is "header"
+<div id="header"> in siteTemplate
+*/
+#header {
+    background-color: lightsteelblue;
+    width: 100%;
+    height: 84px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    margin-bottom: 16px;
+}
+/*
+Style the div component whose unique id is "editableContent"
+<div id="editableContent"> in siteTemplate
+*/
+#editableContent {
+    /* height = 100% window height - (header height 84px + footer height 100px) */
+    height: calc(100% - 184px);
+    width: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 100px;
+    margin-bottom: 16px;
+}
+/*
+Style the div component whose unique id is "footer"
+<div id="footer"> in siteTemplate
+*/
+#footer {
+    height: 100px;
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/*
+==========================
+|   Styling Hyperlinks   |
+==========================
+*/
+
+/* Set the font family for the standard HTML tag "a" for hyperlinks */
+a {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+}
+
+a:link {
+    text-decoration: none; /* Do not underline the link in normal state */
+}
+
+a:visited {
+    text-decoration: none; /* Do not underline the link in visited state */
+}
+
+a:hover {
+    text-decoration: underline; /* Underline the link in hover state */
+}
+
+a:active {
+    text-decoration: underline; /* Underline the link in active state */
+}
+
+/*
+================================
+|   Vertical Navigation Menu   |
+================================
+Used in Profile
+*/
+/* Style class for <ul> */
+.verticalMenu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 180px;
+    background-color: skyblue;
+    border: 1px solid darkgray;
+
+}
+
+/* Style class for <li> */
+.verticalMenuItem {
+    text-align: left;
+    border-bottom: 1px solid darkgray;
+}
+
+/* Style class for <li> and the <a> tag that defines a hyperlink */
+.verticalMenuItem a {
+    display: block;
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;  /* Do not underline the hyperlink */
+}
+
+/* Style class for <ul>, <li> and <a> hyperlink tag */
+.verticalMenu, .verticalMenuItem a {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: normal;
+}
+
+/* Style class for <li> last-child */
+.verticalMenuItem:last-child {
+    border-bottom: none;
+}
+
+/* Style class for <li> for mouse over state */
+.verticalMenuItem a:hover {
+    background-color: lightsteelblue;
+}
+
+/*
+===============================
+|   Other Style Definitions   |
+===============================
+*/
+
+/* Used in headerTemplate */
+.headerTitle {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18pt;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    color: mediumblue;
+}
+
+/* Scrolls text vertically */
+.scrollableTextBox {
+    display: block;
+    text-align: left;
+    width: 500px;
+    height: 100px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+
+/* Used in Profile to style person's photo in a circle */
+.profilePhoto {
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+/* Used in headerTemplate to style user's small photo in a circle */
+.smallProfilePhoto {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    vertical-align: middle;
+}
+
+/*
+Proportionately scale image to show on mobile devices and smaller browser windows.
+Scale the image downward, but do not enlarge it beyond its actual width size.
+*/
+.scalableImage {
+    max-width: 100%;
+    height: auto;
+    border: none;
+}
+
+.smallImage {
+    display: block;  /* Displays an element as a block element (like <p>) */
+    /*
+    top and bottom margins = 0
+    right and left margins = auto (The browser calculates a margin)
+    Since the default alignment is "center", the image is centered.
+    */
+    margin: 0 auto;
+}
+
+/* Styles for h:panelGrid */
+.columnRecipeImage {
+    width: 100px;
+}
+.columnMiddlePart {
+    width: 75%;
+}
+.columnInfoButton {
+    width: 10%;
+}
+
+/*
+Used in ?
+*/
+.dialogPoster {
+    width: 50%;
+}
+.dialogText {
+    width: 50%;
+}
+.ratingColumn1 {
+    width: 45%;
+    height: 100%;
+    vertical-align: middle;
+}
+.ratingColumn2 {
+    width: 45%;
+}
+.ratingColumn3 {
+    width: 10%;
+}
+.selectedRecipeTitle {
+    font-size: 20px;
+}
+
+/* Style p:panelGrid Column 1 */
+.panelGridColumn1 {
+    text-align: right;
+    white-space: nowrap;        / Disallow line break /
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    background-color: powderblue !important;
+}
+
+/* Style p:panelGrid Column 2 */
+.panelGridColumn2 {
+    text-align: left;
+    white-space: nowrap;        / Disallow line break /
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    background-color: lightblue !important;
+}
+
+/* Used to color panel backgrounds */
+.ui-panel-content {
+    background-color: lightskyblue !important;
+}
+
+/*
+---------------------------------
+PrimeFaces dataTable Row Paddings
+---------------------------------
+*/
+.ui-datatable-data td {
+    padding-top: 3px !important;
+    padding-bottom: 3px !important;
+}
+
+/*
+-----------------------------------------
+Skinning PrimeFaces Galleria Image Slider
+-----------------------------------------
+*/
+.ui-galleria-caption {
+    position: absolute;
+    left: 0 !important;
+    background-color: rgba(240, 255, 255, 0.8) !important;
+    padding: 0 !important;
+}
+
+.blueBar.ui-progressbar .ui-progressbar-value {
+    background-color:blue;
+    background-image:none;
+}
+.yellowBar.ui-progressbar .ui-progressbar-value  {
+    background-color:yellow;
+    background-image:none;
+}
+.redBar .ui-progressbar .ui-progressbar-value {
+    background-color:red;
+    background-image:none;
+}
+.cyanBar.ui-progressbar .ui-progressbar-value{
+    background-color:cyan;
+    background-image:none;
+}
