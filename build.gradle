@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'edu.vt'
+version '1.0'
+
+repositories {
+    // Default Maven Central repository
+    mavenCentral()
+
+    // flat filesystem directory containing the PrimeFaces JAR file
+    flatDir {
+        dirs 'C:/Users/KiesA/IdeaProjects/HealthCoach/src/main/webapp/WEB-INF/lib'
+    }
+}
+
+dependencies {
+    // Java EE 8 dependency
+    compileOnly group: 'javax', name: 'javaee-api', version: '8.0.1'
+
+    // primefaces-11.0.0-RC2.jar is located in the flat filesystem directory defined above
+    // primefaces-11.0.0-RC2.jar provides UI components for JSF
+    compileOnly group: 'org.primefaces', name: 'primefaces', version: '11.0.0-RC2'
+
+    // itext-2.1.7.jar is located in the flat filesystem directory defined above
+    // itext-2.1.7.jar provides a Java API to generate PDF files.
+    compileOnly group: 'com.lowagie', name: 'itext', version: '2.1.7'
+
+    // poi-3.15.jar is located in the flat filesystem directory defined above
+    // poi-3.15.jar provides a Java API to generate files in Microsoft format, e.g., Excel, CSV
+    compileOnly group: 'org.apache.poi', name: 'poi', version: '3.15'
+
+    // imgscalr-lib-4.2.jar is a simple and efficient best practice image-scaling and manipulation library implemented in pure Java
+    // imgscalr-lib-4.2.jar is located in the flat filesystem directory defined above
+    compileOnly group: 'org.imgscalr', name: 'imgscalr-lib', version: '4.2'
+
+    // Java Architecture for XML Binding (JAXB) provides an API and tools that
+    // automate the mapping between XML documents and Java objects.
+    compileOnly group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+
+    // MySQL JDBC Connector to Java is configured in WildFly
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.26'
+}
