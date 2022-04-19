@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="List of Public Recipes" />
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+
+            <!-- In case of JSF validation error, set 'selected' to null in recipeController -->
+            <c:if test="#{facesContext.validationFailed}">
+                ${publicRecipeController.unselect()}
+            </c:if>
+
+            <!-- Set 'selected' to null in recipeController when the user refreshes / reloads this JSF page -->
+            <f:metadata>
+                <f:viewAction action="#{publicRecipeController.unselect()}" rendered="#{facesContext.postback}" />
+            </f:metadata>
+
+            <div align="center">
+                <h:form id="RecipeListForm">
+                    <p:panel header="List of Favorite Recipes">
+                        <p:dataTable id="datalist"
+                                     value="#{publicRecipeController.listOfPublicRecipes}"
+                                     var="aRecipe"
+                                     widgetVar="recipesDataTable"
+                                     selectionMode="single"
+                                     selection="#{publicRecipeController.selected}"
+                                     reflow="true"
+                                     showGridlines="true"
+                                     paginator="true"
+                                     rowKey="#{aRecipe.id}"
+                                     rows="10"
+                                     rowsPerPageTemplate="5,10,20,30,50,70,90"
+                                     emptyMessage="No recipe found for the search query entered!" >
+
+                            <p:ajax event="rowSelect"   update="viewButton shareButton"/>
+                            <p:ajax event="rowUnselect" update="viewButton shareButton"/>
+
+                            <!--
+                            *************************
+                            *   Data Table Header   *
+                            *************************
+                            -->
+                            <f:facet name="header">
+                                <div align="center">
+                                    <p:inputText id="globalFilter" onkeyup="PF('recipesDataTable').filter()" filterMatchMode="contains"
+                                                 style="width: 250px"
+                                                 placeholder="Enter Global Search Query" />
+                                    &nbsp;
+                                    <p:commandButton type="button" value="Clear All Filters" styleClass="ui-button-outlined"
+                                                     icon="fas fa-undo" onclick="PF('recipesDataTable').clearFilters()" />
+                                </div>
+                            </f:facet>
+
+                            <!--
+                        *********************
+                        *    Recipe Photo   *
+                        *********************
+                        -->
+                            <p:column headerText="Recipe Photo"
+                                      style="vertical-align: top; text-align: center" width="75px">
+                                <h:graphicImage value="#{aRecipe.photoUrl}"
+                                                style="width: 50px; height: 50px; vertical-align: center; horiz-align: center"/>
+                            </p:column>
+
+                            <!--
+                            *******************
+                            *   Recipe Name   *
+                            *******************
+                            -->
+                            <p:column headerText="Recipe Name" sortBy="#{aRecipe.name}"
+                                      filterBy="#{aRecipe.name}" filterMatchMode="contains"
+                                      style="text-align: center">
+                                <h:outputText value="#{aRecipe.name}" style="text-align: center"/>
+                            </p:column>
+
+                            <!--
+                            **********************
+                            *      Category      *
+                            **********************
+                            -->
+                            <p:column headerText="Category" sortBy="#{aRecipe.category}"
+                                      filterBy="#{aRecipe.category}" filterMatchMode="contains"
+                                      style="text-align: center">
+                                <h:outputText value="#{aRecipe.category}"
+                                              style="text-align: center"/>
+                            </p:column>
+
+                            <!--
+                            ***************
+                            *   Cuisine   *
+                            ***************
+                            -->
+                            <p:column headerText="Cuisine" sortBy="#{aRecipe.cuisine}"
+                                      filterBy="#{aRecipe.cuisine}" filterMatchMode="contains"
+                                      style="text-align: center">
+                                <h:outputText value="#{aRecipe.cuisine}"
+                                              style="text-align: center"/>
+                            </p:column>
+
+                            <!--
+                            **********************
+                            *   Recipe Website   *
+                            **********************
+                            -->
+                            <p:column headerText="Recipe Website" style="text-align: center" width="75px">
+                                <p:link href="#{aRecipe.websiteUrl}" target="_blank">
+                                    <p:graphicImage value="/resources/images/wwwIcon.png" title="" width="40px" height="40px"
+                                                    style="vertical-align: center; horiz-align: center" />
+                                </p:link>
+                            </p:column>
+
+                            <!--
+                            **********************
+                            *   Publisher Name   *
+                            **********************
+                            -->
+                            <p:column headerText="Publisher Name" sortBy="#{aRecipe.publisherName}"
+                                      filterBy="#{aRecipe.publisherName}" filterMatchMode="contains"
+                                      style="text-align: center">
+                                <h:outputText value="#{aRecipe.publisherName}"
+                                              style="text-align: center"/>
+                            </p:column>
+
+                            <!--
+                            *************************
+                            *   Publisher Website   *
+                            *************************
+                            -->
+                            <p:column headerText="Publisher Website" style="text-align: center" width="75px">
+                                <p:link href="#{aRecipe.publisherUrl}" target="_blank">
+                                    <p:graphicImage value="/resources/images/wwwIcon.png" title="" width="40px" height="40px"
+                                                    style="vertical-align: center; horiz-align: center"/>
+                                </p:link>
+                            </p:column>
+
+                            <br /><br />
+
+                            <!--
+                            *************************
+                            *   Data Table Footer   *
+                            *************************
+                            -->
+                            <f:facet name="footer">
+                                <div align="center">
+                                    <!-- VIEW button: id is used since it is referenced to be activated or deactivated -->
+                                    <p:commandButton id="viewButton" value="View" icon="fas fa-eye" styleClass="rounded-button"
+                                                     update=":RecipeViewDlg" oncomplete="PF('RecipeViewDialog').show()"
+                                                     disabled="#{empty publicRecipeController.selected}"/>
+                                    &nbsp;
+                                    <!-- ***************************************************
+                                    Display a Confirmation dialog for the SHARE button
+                                    id is used since it is referenced to be activated or not
+                                    **************************************************** -->
+                                    <p:commandButton id="shareButton" value="Share" icon="fas fa-share"  styleClass="rounded-button"
+                                                     actionListener="#{userRecipeController.share(publicRecipeController.selected)}"
+                                                     update="datalist,:growlInfoMessage,:growlWarningMessage,:growlErrorMessage,:growlFatalMessage"
+                                                     disabled="#{empty publicRecipeController.selected}">
+
+                                        <p:confirm header="Share Confirmation"
+                                                   message="Are you sure you want to add the selected recipe to the Signed-In User's List of Favorite Recipes?"/>
+                                    </p:commandButton>
+
+                                    <p:confirmDialog id="confirmShareDialogBox" global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                                        <div align="center">
+                                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fas fa-window-close" />
+                                            &nbsp;
+                                            <p:commandButton value="Yes" type="button" class="ui-confirmdialog-yes ui-button-danger" icon="fas fa-check-square"/>
+                                        </div>
+                                    </p:confirmDialog>
+
+                                    <!-- ******************************************
+                                    End of Display of the SHARE Confirmation dialog
+                                    ******************************************* -->
+                                </div>
+                            </f:facet>
+                        </p:dataTable>
+                    </p:panel>
+                </h:form>
+            </div>
+
+            <!-- 
+            Clicking the Create button displays the included 
+            Create.xhtml file in a dialog window on top of this page.
+
+            <ui:include src="/publicRecipes/Create.xhtml"/>
+            -->
+
+            <!-- 
+            Clicking the View button displays the included 
+            ViewPublicWorkout.xhtml file in a dialog window on top of this page.
+            -->
+            <ui:include src="/publicRecipes/View.xhtml"/>
+
+            <!-- 
+            Clicking the Edit button displays the included 
+            Edit.xhtml file in a dialog window on top of this page.
+
+            <ui:include src="/publicRecipes/Edit.xhtml"/>
+            -->
+        </ui:define>
+    </ui:composition>
+</html>
